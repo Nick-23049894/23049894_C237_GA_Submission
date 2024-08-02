@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<style>
+    /* Tailwind's line clamp utility */
+    .line-clamp-3 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        /* Limit to three lines */
+        -webkit-box-orient: vertical;
+    }
+
+    /* Custom styles for main content padding */
+    main {
+        padding: 0 20px;
+        /* Adjust the padding as needed */
+    }
+
+    .text-red-bold {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+<body class="bg-gray-100">
+    <header class="bg-white shadow-md rounded-md p-4 mb-6 sticky top-0 z-50">
+        <div class="flex items-center justify-between">
+            <a href="/home" class="flex items-center">
+                <img src="/images/taskManagerIcon.png" class="w-6 h-6 mr-2" alt="Task Manager Icon">
+                <h1 class="text-2xl font-bold">Task Management</h1>
+            </a>
+            <nav class="flex space-x-4 items-center">
+                <a href="/createtask" class="hover:bg-gray-200 text-blue-500 font-bold py-2 px-4 rounded">Add Tasks</a>
+                <a href="/" class="hover:bg-gray-200 text-red-500 font-bold py-2 px-4 rounded">Logout</a> 
+                <h3 class="text-xl font-bold px-4">
+                    <%= data.username %>
+                </h3>
+            </nav>
+        </div>
+    </header>
+    
+
+    <main class="container mx-auto">
+        <h1 class="text-lg font-bold mb-2">Date: <span id="todaysDate"></span><br></h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- High Priority -->
+            <div class="bg-white p-4 rounded-md shadow-md">
+                <h2 class="text-lg font-bold mb-2">High Priority</h2>
+                <ul>
+                    <% data.tasks.forEach((task)=> { %>
+                        <% if (task.priority==='High' && !task.completed) { %>
+                            <li class="relative mb-4">
+                                <a href="/task/<%= task.id %>">
+                                    <div class="p-4 border rounded-md bg-red-100">
+                                        <h4 class="text-lg font-bold">
+                                            <%= task.title %>
+                                        </h4>
+                                        <p class="text-sm line-clamp-3">
+                                            <%= task.description %>
+                                        </p>
+                                        <p class="text-sm text-gray-600 due-date">
+                                            <%= new Date(task.dueDate).toLocaleDateString('en-GB') %>
+                                        </p>
+                                        <% if (!task.completed) { %>
+                                            <span class="text-red-500">Not completed</span>
+                                            <% } else { %>
+                                                <span class="text-green-500">Completed</span>
+                                                <% } %>
+                                    </div>
+                                </a>
+                            </li>
+                            <% } %>
+                                <% }); %>
+                </ul>
+            </div>
+
+            <!-- Medium Priority -->
+            <div class="bg-white p-4 rounded-md shadow-md">
+                <h2 class="text-lg font-bold mb-2">Medium Priority</h2>
+                <ul>
+                    <% data.tasks.forEach((task)=> { %>
+                        <% if (task.priority==='Medium' && !task.completed) { %>
+                            <li class="relative mb-4">
+                                <a href="/task/<%= task.id %>">
+                                    <div class="p-4 border rounded-md bg-yellow-100">
+                                        <h4 class="text-lg font-bold">
+                                            <%= task.title %>
+                                        </h4>
+                                        <p class="text-sm line-clamp-3">
+                                            <%= task.description %>
+                                        </p>
+                                        <p class="text-sm text-gray-600 due-date">
+                                            <%= new Date(task.dueDate).toLocaleDateString('en-GB') %>
+                                        </p>
+                                        <% if (!task.completed) { %>
+                                            <span class="text-red-500">Not completed</span>
+                                            <% } else { %>
+                                                <span class="text-green-500">Completed</span>
+                                                <% } %>
+                                    </div>
+                                </a>
+                            </li>
+                            <% } %>
+                                <% }); %>
+                </ul>
+            </div>
+
+            <!-- Low Priority -->
+            <div class="bg-white p-4 rounded-md shadow-md">
+                <h2 class="text-lg font-bold mb-2">Low Priority</h2>
+                <ul>
+                    <% data.tasks.forEach((task)=> { %>
+                        <% if (task.priority==='Low' && !task.completed) { %>
+                            <li class="relative mb-4">
+                                <a href="/task/<%= task.id %>">
+                                    <div class="p-4 border rounded-md bg-green-100">
+                                        <h4 class="text-lg font-bold">
+                                            <%= task.title %>
+                                        </h4>
+                                        <p class="text-sm line-clamp-3">
+                                            <%= task.description %>
+                                        </p>
+                                        <p class="text-sm text-gray-600 due-date">
+                                            <%= new Date(task.dueDate).toLocaleDateString('en-GB') %>
+                                        </p>
+                                        <% if (!task.completed) { %>
+                                            <span class="text-red-500">Not completed</span>
+                                            <% } else { %>
+                                                <span class="text-green-500">Completed</span>
+                                                <% } %>
+                                    </div>
+                                </a>
+                            </li>
+                            <% } %>
+                                <% }); %>
+                </ul>
+            </div>
+
+            <!-- Completed Tasks -->
+            <div class="bg-white p-4 rounded-md shadow-md">
+                <h2 class="text-lg font-bold mb-2">Completed Tasks</h2>
+                <ul>
+                    <% data.tasks.forEach((task)=> { %>
+                        <% if (task.completed) { %>
+                            <li class="relative mb-4">
+                                <a href="/task/<%= task.id %>">
+                                    <div class="p-4 border rounded-md bg-gray-100">
+                                        <h4 class="text-lg font-bold">
+                                            <%= task.title %>
+                                        </h4>
+                                        <span class="text-green-500">Completed</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <% } %>
+                                <% }); %>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dueDates = document.querySelectorAll('.due-date'); // Select all elements with class 'due-date'
+            const today = new Date(); // Get current date
+
+            dueDates.forEach(dueDateElement => {
+                const dueDateString = dueDateElement.textContent.trim(); // Trim and get the due date string
+                const [day, month, year] = dueDateString.split('/'); // Split date string into day, month, year
+                const dueDate = new Date(`${year}-${month}-${day}`); // Construct due date object
+                const timeDiff = dueDate - today; // Calculate time difference in milliseconds
+                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Calculate days difference
+
+                // Apply appropriate class based on days difference
+                if (daysDiff < 0) {
+                    dueDateElement.classList.add('text-red-bold'); // Overdue tasks
+                } else if (daysDiff <= 3) {
+                    dueDateElement.classList.add('text-red-500'); // Tasks due soon
+                } else {
+                    dueDateElement.classList.add('text-green-500'); // Tasks not due soon
+                }
+            });
+
+            // Display today's date
+            document.getElementById('todaysDate').textContent = new Date().toLocaleDateString('en-GB');
+        });
+
+    </script>
+
+</body>
+
+</html>

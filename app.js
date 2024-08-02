@@ -20,7 +20,7 @@ const connection = mysql.createConnection({
     // user: 'root',
     // password: '',
     // database: 'taskManagerDb'
-    host: 'udb4free.net',
+    host: 'db4free.net',
     user: 'nickho_23049894',
     password: 'pDyB3m3E*F"*XD.',
     database: 'taskmanagerdb'
